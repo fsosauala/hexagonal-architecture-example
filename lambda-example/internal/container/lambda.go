@@ -20,7 +20,8 @@ type LambdaHandler struct {
 }
 
 func Initialize() LambdaHandler {
-	countriesService := services.NewCountryService()
+	countriesRepository := adapters.NewCountryRepository()
+	countriesService := services.NewCountryService(countriesRepository)
 	httpHandler := adapters.NewHTTPHandler(countriesService)
 	return LambdaHandler{
 		httpHandlerFunc: httpHandler.ProcessRequest,
