@@ -2,7 +2,6 @@ package adapters
 
 import (
 	"context"
-	"log"
 
 	"github.com/fsosauala/microservice-example/internal/core/domain"
 )
@@ -23,8 +22,15 @@ func (cr CountryRepository) CreateCountry(ctx context.Context, country domain.Co
 		return domain.AlreadyExistsError
 	}
 	cr.db[country.Name] = country
-	for key, value := range cr.db {
-		log.Printf("Key: %v\nValue: %v", key, value)
-	}
 	return nil
+}
+
+func (cr CountryRepository) GetCountries(ctx context.Context) ([]domain.Country, error) {
+	countries := make([]domain.Country, 0, len(cr.db))
+
+	for _, country := range cr.db {
+		countries = append(countries, country)
+	}
+
+	return countries, nil
 }

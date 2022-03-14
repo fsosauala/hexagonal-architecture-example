@@ -11,4 +11,7 @@ type (
 		ID   string `json:"id"`
 		Name string `json:"name"`
 	}
+	GetCountriesResponse struct {
+		Countries []Country `json:"countries"`
+	}
 )

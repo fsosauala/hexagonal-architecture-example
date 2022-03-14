@@ -10,7 +10,19 @@ import (
 )
 
 func (h Handler) GetCountries(c echo.Context) error {
-	return c.String(http.StatusAccepted, "el GET")
+	ctx := c.Request().Context()
+
+	response, err := h.countriesService.GetCountries(ctx)
+	if err != nil {
+		errorToReturn := domain.ErrUnknownError
+		var ce domain.CustomErr
+		if errors.As(err, &ce) {
+			errorToReturn = ce
+		}
+		return c.JSON(errorToReturn.HTTPCode, errorToReturn)
+	}
+
+	return c.JSON(http.StatusOK, response)
 }
 
 func (h Handler) CreateCountry(c echo.Context) error {

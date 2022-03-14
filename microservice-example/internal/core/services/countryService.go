@@ -41,3 +41,14 @@ func (cs CountryService) CreateCountry(ctx context.Context, request domain.Count
 		ID: country.ID,
 	}, nil
 }
+
+func (cs CountryService) GetCountries(ctx context.Context) (domain.GetCountriesResponse, error) {
+	countries, err := cs.countriesRepository.GetCountries(ctx)
+	if err != nil {
+		return domain.GetCountriesResponse{}, domain.ErrUnknownError
+	}
+
+	return domain.GetCountriesResponse{
+		Countries: countries,
+	}, nil
+}

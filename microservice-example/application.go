@@ -2,17 +2,20 @@ package main
 
 import (
 	"context"
+	"flag"
+	"fmt"
 	"os"
 	"os/signal"
 	"time"
 
-	"github.com/fsosauala/microservice-example/internal/core/services"
-
 	"github.com/fsosauala/microservice-example/internal/adapters"
+	"github.com/fsosauala/microservice-example/internal/core/services"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
+	port := flag.String("port", "5000", "the port flag")
+	flag.Parse()
 	countriesRepository := adapters.NewCountryRepository()
 	countriesService := services.NewCountryService(countriesRepository)
 	echoHandler := adapters.NewHTTPHandler(countriesService)
@@ -23,7 +26,7 @@ func main() {
 	echoHandler.Use(middleware.Recover())
 	// Start server
 	go func() {
-		if err := echoHandler.Start(":8080"); err != nil {
+		if err := echoHandler.Start(fmt.Sprintf(":%s", *port)); err != nil {
 			echoHandler.Logger.Info("shutting down the server")
 		}
 	}()
