@@ -47,7 +47,7 @@ func (h Handler) ProcessRequest(
 		}
 		var ce domain.CustomErr
 		if errors.As(err, &ce) {
-			toReturn.StatusCode = ce.ErrorCode
+			toReturn.StatusCode = ce.HTTPCode
 			toReturn.Body = ce.String()
 		}
 		return toReturn, nil
