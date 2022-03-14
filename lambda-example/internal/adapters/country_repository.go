@@ -2,6 +2,7 @@ package adapters
 
 import (
 	"context"
+	"log"
 
 	"github.com/fsosauala/lambda-example/internal/core/domain"
 )
@@ -22,5 +23,8 @@ func (cr CountryRepository) CreateCountry(ctx context.Context, country domain.Co
 		return domain.AlreadyExistsError
 	}
 	cr.db[country.Name] = country
+	for key, value := range cr.db {
+		log.Printf("Key: %v\nValue: %v", key, value)
+	}
 	return nil
 }

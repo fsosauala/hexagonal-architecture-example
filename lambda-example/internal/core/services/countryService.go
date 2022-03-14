@@ -33,6 +33,7 @@ func (cs CountryService) CreateCountry(ctx context.Context, request domain.Count
 		if errors.Is(err, domain.AlreadyExistsError) {
 			return domain.CountryResponse{}, domain.ErrBadRequest
 		}
+
 		return domain.CountryResponse{}, domain.ErrUnknownError
 	}
 
