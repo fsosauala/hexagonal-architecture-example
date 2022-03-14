@@ -30,7 +30,7 @@ func (h Handler) ProcessRequest(
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
 			Headers: map[string]string{
-				"application/json": "Content-Type",
+				"Content-Type": "application/json",
 			},
 			Body: domain.ErrBadRequest.String(),
 		}, nil
@@ -42,7 +42,7 @@ func (h Handler) ProcessRequest(
 			Body:       domain.ErrUnknownError.String(),
 			StatusCode: http.StatusInternalServerError,
 			Headers: map[string]string{
-				"application/json": "Content-Type",
+				"Content-Type": "application/json",
 			},
 		}
 		var ce domain.CustomErr
@@ -56,7 +56,7 @@ func (h Handler) ProcessRequest(
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusCreated,
 		Headers: map[string]string{
-			"application/json": "Content-Type",
+			"Content-Type": "application/json",
 		},
 		Body: response.String(),
 	}, nil
