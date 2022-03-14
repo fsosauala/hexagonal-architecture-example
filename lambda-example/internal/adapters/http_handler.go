@@ -28,11 +28,11 @@ func (h Handler) ProcessRequest(
 	var request domain.CountryRequest
 	if err := json.NewDecoder(strings.NewReader(req.Body)).Decode(&request); err != nil {
 		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
+			StatusCode: domain.ErrCannotParseBody.HTTPCode,
 			Headers: map[string]string{
 				"Content-Type": "application/json",
 			},
-			Body: domain.ErrBadRequest.String(),
+			Body: domain.ErrCannotParseBody.String(),
 		}, nil
 	}
 
@@ -40,7 +40,7 @@ func (h Handler) ProcessRequest(
 	if err != nil {
 		toReturn := events.APIGatewayProxyResponse{
 			Body:       domain.ErrUnknownError.String(),
-			StatusCode: http.StatusInternalServerError,
+			StatusCode: domain.ErrUnknownError.HTTPCode,
 			Headers: map[string]string{
 				"Content-Type": "application/json",
 			},

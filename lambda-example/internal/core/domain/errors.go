@@ -15,20 +15,25 @@ type CustomErr struct {
 }
 
 var (
+	ErrUnknownError = CustomErr{
+		HTTPCode:  http.StatusInternalServerError,
+		Message:   "Something unexpected happened",
+		ErrorCode: 1,
+	}
+	ErrCannotParseBody = CustomErr{
+		HTTPCode:  http.StatusBadRequest,
+		Message:   "Error parsing body",
+		ErrorCode: 2,
+	}
 	ErrEmptyName = CustomErr{
 		HTTPCode:  http.StatusBadRequest,
-		Message:   "Te country name cannot be empty",
-		ErrorCode: 1,
+		Message:   "The country name cannot be empty",
+		ErrorCode: 3,
 	}
 	ErrBadRequest = CustomErr{
 		HTTPCode:  http.StatusBadRequest,
 		Message:   "The country already exists",
-		ErrorCode: 2,
-	}
-	ErrUnknownError = CustomErr{
-		HTTPCode:  http.StatusInternalServerError,
-		Message:   "Something unexpected happened",
-		ErrorCode: 3,
+		ErrorCode: 4,
 	}
 )
 
